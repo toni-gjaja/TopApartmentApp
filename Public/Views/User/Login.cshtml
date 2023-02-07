@@ -1,0 +1,90 @@
+﻿@model DatabaseLib.MODELS.AppUser
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .login-form {
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 5%;
+        display: flex;
+        background-color: #e3f2fd;
+        font-family: 'Roboto Condensed', sans-serif;
+        border-radius: 10px;
+    }
+
+    .login-data {
+        display: block;
+        margin-top: 10%;
+    }
+
+    .login-header {
+        text-align: center;
+    }
+
+    .btn {
+        font-size: 2vh;
+    }
+</style>
+
+@Html.AntiForgeryToken()
+
+@using (Html.BeginForm(controllerName: "User", actionName: "Login", htmlAttributes: new { id = "formLogin" }, routeValues: Model, method: FormMethod.Get))
+{
+
+
+    <div class="login-form" data-aos="flip-up">
+
+        <div>
+
+            <img src="../Images/loginPhoto.jpg" alt="">
+
+        </div>
+
+        <div class="login-data w-100">
+
+            <div class="login-header mt-3 mb-3">
+
+                <h1>Prijava</h1>
+
+            </div>
+
+            <div class="d-flex justify-content-center mt-5">
+
+                <img src="../Images/mail-icon.svg" height="40px" alt="">
+
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control w-75", required = "" } })
+
+            </div>
+
+            <div class="d-flex justify-content-center mt-5">
+
+                <img src="../Images/key-icon.svg" height="40px" alt="">
+
+                @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control w-75", required = "" } })
+
+            </div>
+
+            <div class="d-flex justify-content-center mt-5">
+                <button id="btnLogin" type="submit" class="btn btn-outline-primary">Prijavi se</button>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+}
+
+    @section scripts{
+        <script>
+            $("#btnLogin").on('click', function () {
+                $("#formLogin").submit();
+            });
+        </script>
+    }
+
+

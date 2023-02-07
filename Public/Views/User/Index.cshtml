@@ -1,0 +1,228 @@
+﻿@model Public.Models.VM.UserVM
+@{
+    DatabaseLib.MODELS.AppUser user = (DatabaseLib.MODELS.AppUser)Session["user"];
+    ViewBag.Title = user.UserName + " - račun";
+    DatabaseLib.DAL.IRepo repo = DatabaseLib.DAL.RepoFactory.GetRepo();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dashboard {
+        display: flex;
+    }
+
+    .user-info {
+        width: 30%;
+        text-align: center;
+        font-family: 'Roboto Condensed', sans-serif;
+    }
+
+    .header {
+        background-color: #e3f2fd;
+    }
+
+    .info {
+        border-bottom: 2px solid gray;
+    }
+
+    .info-head h3 {
+        margin-top: 1.5%;
+    }
+
+    .all-reviews {
+        display: block;
+        width: 28%;
+        font-family: 'Roboto Condensed', sans-serif;
+        text-align: center;
+    }
+
+    .review {
+        text-decoration: none;
+        color: black;
+        transition: 0.2s ease-out;
+    }
+
+        .review:hover {
+            color: black;
+            background-color: aliceblue;
+            text-decoration: none;
+        }
+
+    .rating {
+        margin: auto;
+    }
+
+    .comment {
+        font-family: 'Roboto Condensed', sans-serif;
+    }
+
+    .all-reservations {
+        display: block;
+        width: 28%;
+        font-family: 'Roboto Condensed', sans-serif;
+        text-align: center;
+    }
+</style>
+
+<div class="dashboard" data-aos="zoom-in">
+
+    <div class="user-info m-5">
+
+        <div class="header">
+
+            <h2 class="py-3">Osobni podaci</h2>
+
+        </div>
+
+        <div class="info  my-3">
+
+            <div class="info-head d-flex justify-content-center">
+
+                <img src="images/mail-icon.svg" width="50px" height="50px" alt="">
+                <h3>Email</h3>
+
+            </div>
+
+            <div>
+
+                <h2>@Model.AppUser.Email</h2>
+
+            </div>
+
+        </div>
+
+        <div class="info my-3">
+
+            <div class="info-head d-flex justify-content-center">
+
+                <img src="images/icons8-phone-50.png" width="50px" height="50px" alt="">
+                <h3>Broj mobitela</h3>
+
+            </div>
+
+            <div>
+
+                <h2>@Model.AppUser.PhoneNumber</h2>
+
+            </div>
+
+        </div>
+
+        <div class="info my-3">
+
+            <div class="info-head d-flex justify-content-center">
+
+                <img src="~/images/person-icon.svg" width="50px" height="50px" alt="">
+                <h3>Korisničko ime</h3>
+
+            </div>
+
+            <div>
+
+                <h2>@Model.AppUser.UserName</h2>
+
+            </div>
+
+        </div>
+
+        <div class="info my-3">
+
+            <div class="info-head d-flex justify-content-center">
+
+                <img src="images/point-icon.svg" width="50px" height="50px" alt="">
+                <h3>Adresa</h3>
+
+            </div>
+
+            <div>
+
+                <h2>@Model.AppUser.Address</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="all-reviews m-5">
+
+        <div class="header">
+
+            <h2 class="py-3">Recenzije</h2>
+
+        </div>
+
+        @if (Model.Reviews.Count == 0)
+        {
+            <div class="d-flex justify-content-center">
+
+                <h3>Nema recenzija!</h3>
+
+            </div>
+        }
+        else
+        {
+            foreach (DatabaseLib.MODELS.ApartmentReview review in Model.Reviews)
+            {
+                <a href="@Url.Action("Index","Apartment", new { id = review.ApartmentId })" class="review d-flex justify-content-center my-3">
+
+                    <div class="comment w-50">
+
+                        <h3>@review.Details</h3>
+
+                    </div>
+
+                    <div class="rating w-50">
+
+                        @for (int i = 0; i < review.Stars; i++)
+                        {
+                            <img src="images/star-icon.svg" width="30px" height="30px" alt="">
+                        }
+
+                    </div>
+
+                </a>
+            }
+        }
+
+
+    </div>
+
+    <div class="all-reservations m-5">
+
+        <div class="header">
+
+            <h2 class="py-3">Rezervacije</h2>
+
+        </div>
+
+        @if (Model.Reservations.Count == 0)
+        {
+            <div class="d-flex justify-content-center">
+
+                <h3>Nema rezervacija!</h3>
+
+            </div>
+        }
+        else
+        {
+            foreach (DatabaseLib.MODELS.Reservation reservation in Model.Reservations)
+            {
+                <div class="reservation border border-secondary mb-3">
+
+                    <h3>Broj rezervacije: @reservation.Id</h3>
+
+                    <h3>Ime apartmana: @reservation.ApartmentName</h3>
+
+                    <h3>Detalji: @reservation.Details</h3>
+
+
+                </div>
+            }
+        }
+
+    </div>
+
+</div>
+
+

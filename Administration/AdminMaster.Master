@@ -1,0 +1,188 @@
+﻿<%@ Master Language='C#' AutoEventWireup='true' CodeBehind='AdminMaster.master.cs' Inherits='Administration.AdminMaster' %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat='server'>
+    <title></title>
+    <asp:ContentPlaceHolder ID='Head' runat='server'>
+    </asp:ContentPlaceHolder>
+
+    <!-- BOOTSTRAP -->
+    <link href='Content/bootstrap.min.css' rel='stylesheet' />
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- CUSTOM CSS -->
+    <style>
+        body {
+            font-family: 'Merriweather', serif;
+        }
+
+        fieldset {
+            border: 1px solid #ced4da;
+            padding: inherit;
+            border-radius: 4px;
+        }
+
+            fieldset > legend {
+                float: initial;
+                width: auto;
+                padding: revert;
+                font-size: initial;
+                margin: 0;
+            }
+
+        #ApIcon {
+            font-size: 1.5rem;
+            display: inline-block;
+            position: relative;
+            color: #A9A9A9;
+        }
+
+            #ApIcon:after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                transform: scaleX(0);
+                height: 2px;
+                bottom: 0;
+                left: 0;
+                background-color: #A9A9A9;
+                transform-origin: bottom right;
+                transition: transform 0.25s ease-out;
+            }
+
+            #ApIcon:hover:after {
+                transform: scaleX(1);
+                transform-origin: bottom left;
+            }
+
+        .nav-link {
+            font-size: 1rem;
+            display: inline-block;
+            position: relative;
+            color: #A9A9A9;
+        }
+
+            .nav-link:after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                transform: scaleX(0);
+                height: 2px;
+                bottom: 0;
+                left: 0;
+                background-color: #A9A9A9;
+                transform-origin: bottom right;
+                transition: transform 0.25s ease-out;
+            }
+
+            .nav-link:hover:after {
+                transform: scaleX(1);
+                transform-origin: bottom left;
+            }
+
+        #btnLogout {
+            font-size: 1rem;
+            margin-left: 950px;
+        }
+    </style>
+
+</head>
+<body>
+    <form id='WebApp' runat='server'>
+
+        <nav class='navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top justify-content-center'>
+
+            <div class='container-fluid'>
+                <a class="navbar-brand" href="#">
+                    <img src="Images/apartmentIcon.svg" width="30" height="30" alt="">
+                </a>
+
+                <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+                    <span class='navbar-toggler-icon'></span>
+                </button>
+                <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+
+                    <ul class='navbar-nav mr-auto'>
+
+                        <%if (Session["administrator"] == null)
+                            {  %>
+
+                        <li class='nav-item'>
+                            <a class='nav-link' id="ApIcon" href='Login.aspx'>Top apartment</a>
+                        </li>
+
+
+                        <%}
+                            else
+                            { %>
+
+                        <li class='nav-item'>
+                            <a class='nav-link' href='Dashboard.aspx'>Apartmani</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a class='nav-link' href='Reservations.aspx'>Rezervacije</a>
+                        </li>
+
+                        <li class='nav-item'>
+                            <a class='nav-link' href='DashboardUsers.aspx'>Korisnici</a>
+                        </li>
+
+                        <li class='nav-item'>
+                            <a class='nav-link' href='Tags.aspx'>Oznake</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <asp:Button ID='btnLogout' class='btn btn-danger' runat='server' Text='Odjava' OnClick='Logout_click' OnClientClick="return confirm('Biti ćete odjavljeni')" />
+
+                        </li>
+
+
+                    </ul>
+
+                    
+
+                    <%} %>
+                </div>
+            </div>
+        </nav>
+
+        <div>
+            <asp:ContentPlaceHolder ID='Content' runat='server'>
+            </asp:ContentPlaceHolder>
+        </div>
+
+
+    </form>
+
+    <!-- JQUERY -->
+    <script src='Scripts/jquery-3.6.0.min.js'></script>
+
+    <!-- BOOTSTRAP -->
+    <script src='Scripts/bootstrap.min.js'></script>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        AOS.init();
+    </script>
+
+    <script>
+
+        $(document).ready(function () { $('#MyTable').dataTable() })
+
+    </script>
+
+
+</body>
+</html>

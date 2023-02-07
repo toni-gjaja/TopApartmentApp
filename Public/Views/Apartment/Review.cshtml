@@ -1,0 +1,58 @@
+﻿@model DatabaseLib.MODELS.ApartmentReview
+@{
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<style>
+    .headline {
+        font-family: 'Lobster', cursive;
+    }
+
+    .lbl {
+        font-family: 'Exo 2', sans-serif;
+        font-size: 2rem;
+    }
+
+</style>
+
+<div class="text-center">
+    <h2 class="headline">Recenzija</h2>
+</div>
+
+@Html.AntiForgeryToken()
+
+@using (Html.BeginForm(controllerName: "Apartment", actionName: "Review", routeValues: Model))
+{ 
+    <div class="review-form mt-5">
+
+        <div class="form-group text-center mt-5">
+            <label class="lbl" for="form-control">Komentar</label>
+
+            <div class="d-flex justify-content-center">
+                @Html.EditorFor(model => model.Details, new { htmlAttributes = new { @class = "form-control", required = "" } })
+            </div>
+
+        </div>
+
+        <div class="form-group text-center mt-5">
+            <label class="lbl" for="form-control">Ocjena</label>
+
+            <div class="d-flex justify-content-center">
+                @Html.EditorFor(model => model.Stars, new { htmlAttributes = new { @type = "number", @min = "0", @step = "1", @value = "1" } })
+            </div>
+
+        </div>
+
+        <div class="form-group text-center mt-5">
+
+            <button id="btnLeaveReview" type="submit" class="btn btn-outline-primary">Recenziraj</button>
+
+        </div>
+
+    </div>
+}
+
+
+

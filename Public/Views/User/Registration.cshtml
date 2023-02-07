@@ -1,0 +1,131 @@
+﻿@model DatabaseLib.MODELS.AppUser
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Recaptcha.Web.Mvc;
+
+<style>
+    .registration-form {
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 5%;
+        display: flex;
+        background-color: #e3f2fd;
+        font-family: 'Roboto Condensed', sans-serif;
+        border-radius: 10px;
+    }
+
+    .reg-data {
+        display: block;
+    }
+
+    .reg-header {
+        text-align: center;
+    }
+
+    .btn {
+        font-size: 2vh;
+    }
+</style>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="registration-form" data-aos="flip-up">
+
+        <div class="reg-photo">
+
+            <img src="../Images/loginPhoto.jpg" alt="">
+
+        </div>
+
+        <div class="reg-data w-100">
+
+            <div class="reg-header mt-3 mb-3">
+
+                <h1>Registracija</h1>
+
+            </div>
+
+            <div class="reg-input d-flex justify-content-center mt-5">
+
+                <img src="../Images/mail-icon.svg" height="40px" alt="">
+
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control w-75", required = "" } })
+
+            </div>
+
+            <div class="reg-input d-flex justify-content-center mt-5">
+
+                <img src="../Images/key-icon.svg" height="40px" alt="">
+
+                @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control w-75", required = "" } })
+
+            </div>
+
+            <div class="reg-input d-flex justify-content-center mt-5">
+
+                <img src="../Images/icons8-phone-50.png" height="40px" alt="">
+
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control w-75", required = "" } })
+
+
+            </div>
+
+            <div class="reg-input d-flex justify-content-center mt-5">
+
+                <img src="../Images/person-icon.svg" height="40px" alt="">
+
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control w-75", required = "" } })
+
+            </div>
+
+            <div class="reg-input d-flex justify-content-center mt-5">
+
+                <img src="../Images/point-icon.svg" height="40px" alt="">
+
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control w-75", required = "" } })
+
+
+            </div>
+
+            <div class="d-flex justify-content-center mt-5">
+
+                @Html.RecaptchaWidget()
+
+            </div>
+
+            <div class="d-flex justify-content-center mt-5">
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    @Html.ValidationSummary();
+                }
+
+            </div>
+
+
+
+            <div class="reg-input d-flex justify-content-center mt-5">
+                <button type="submit" class="btn btn-outline-primary">Registriraj se</button>
+            </div>
+
+
+            
+
+        </div>
+
+    </div>
+
+
+}
+
+
+
+

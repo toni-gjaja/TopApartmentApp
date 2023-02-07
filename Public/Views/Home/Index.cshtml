@@ -1,0 +1,170 @@
+﻿@model Public.Models.VM.ApartmentsVM
+@{
+    DatabaseLib.DAL.IRepo repo = DatabaseLib.DAL.RepoFactory.GetRepo();
+    ViewBag.Title = "Top Apartment Home";
+}
+
+<style>
+    .apartment-card {
+        font-family: 'Roboto Condensed', sans-serif;
+        width: 25%;
+        margin: 2%;
+        height: 500px;
+        background-image: url("../Images/apartment.jpg");
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        transition: all 0.5s ease-in-out;
+        color: black;
+        text-decoration: none;
+    }
+
+        .apartment-card:hover {
+            transform: scale(1.1);
+            text-decoration: none;
+            color: black;
+        }
+
+    .apt-name {
+        padding: 15px;
+    }
+
+    .apt-info {
+        margin: 20px;
+        height: 65%;
+        display: flex;
+    }
+
+    .apt-labels {
+        width: 50%;
+        height: 100%;
+        display: block;
+        border-right: 2px solid black;
+    }
+
+    .apt-data {
+        width: 50%;
+        height: 100%;
+        display: block;
+    }
+
+    img {
+        margin: 2px;
+    }
+
+    h3 {
+        margin: auto;
+    }
+
+    .data-part {
+        height: 44px;
+    }
+
+    .apt-rating {
+        display: flex;
+        justify-content: center;
+    }
+
+    .all-apartments {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+</style>
+
+
+
+
+<div class="all-apartments" data-aos="zoom-in">
+
+    @foreach (DatabaseLib.MODELS.Apartment apartment in Model.Apartments)
+    {
+
+        <a href="@Url.Action("Index","Apartment", new { id = apartment.Id })" class="apartment-card">
+
+            <h1>@apartment.Name</h1>
+
+            <div class="apt-info">
+
+                <div class="apt-labels">
+
+                    <div class="d-flex justify-content-center mt-1">
+                        <img src="../Images/city-icon.svg" width="40px" height="40px" alt="">
+                        <h3>Grad</h3>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-1">
+                        <img src="../Images/point-icon.svg" width="40px" height="40px" alt="">
+                        <h3>Adresa</h3>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-1">
+                        <img src="../Images/price-icon.svg" width="40px" height="40px" alt="">
+                        <h3>Cijena</h3>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-1 ">
+                        <img src="../Images/adult-icon.svg" width="40px" height="40px" alt="">
+                        <h3>Odrasli</h3>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-1">
+                        <img src="../Images/kids-icon.svg" width="40px" height="40px" alt="">
+                        <h3>Djeca</h3>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-1">
+                        <img src="../Images/room-icon.svg" width="40px" height="40px" alt="">
+                        <h3>Sobe</h3>
+                    </div>
+
+                </div>
+
+                <div class="apt-data">
+
+                    <div class="data-part d-flex justify-content-center mt-1 ">
+                        <h3>@apartment.City</h3>
+                    </div>
+
+                    <div class="data-part d-flex justify-content-center mt-1 ">
+                        <h3>@apartment.Address</h3>
+                    </div>
+
+                    <div class="data-part d-flex justify-content-center mt-1">
+                        <h3>@apartment.Price</h3>
+                    </div>
+
+                    <div class="data-part d-flex justify-content-center mt-1 ">
+                        <h3>@apartment.MaxAdults</h3>
+                    </div>
+
+                    <div class="data-part d-flex justify-content-center mt-1 ">
+                        <h3>@apartment.MaxChildren</h3>
+                    </div>
+
+                    <div class="data-part d-flex justify-content-center mt-1 ">
+                        <h3>@apartment.TotalRooms</h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="apt-rating">
+
+                @{
+                    int stars = repo.GetApartmentStars(apartment.Id);
+                    for (int i = 0; i < stars; i++)
+                    {
+                        <img src="../Images/star-icon.svg" width="40px" height="40px" alt="">
+                    }
+                }
+
+            </div>
+        </a>
+
+
+    }
+
+</div>
+
